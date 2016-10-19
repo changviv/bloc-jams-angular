@@ -27,6 +27,12 @@
             preload: true
         });
         
+        currentBuzzObject.bind('timeupdate', function() {
+            $rootScope.$apply(function() {
+                SongPlayer.currentTime = currentBuzzObject.getTime();
+            });
+        });
+        
         SongPlayer.currentSong = song;
     };
 /**
@@ -66,7 +72,7 @@
  * @desc set the volume
  * @param {Object} value
  */    
-        SongPlayer.volume = function(volume) {
+    SongPlayer.volume = function(volume) {
         if (currentBuzzObject) {
             currentBuzzObject.setVolume(volume);
         }
@@ -115,17 +121,6 @@
         }
     };
 /**
- * @function setCurrentTime
- * @desc Set current time (in seconds) of currently playing song
- * @param {Number} time
- */         
-    SongPlayer.setCurrentTime = function(time) {
-        if (currentBuzzObject) {
-            currentBuzzObject.setTime(time);
-        }
-    };    
-    
-/**
 * @function next
 * @desc play next song
 * @param function
@@ -141,7 +136,19 @@
             setSong(song);
             playSong(song);
         }
+    }; 
+        
+/**
+* @function setCurrentTime
+* @desc Set current time (in seconds) of currently playing song
+* @param {Number} time
+*/         
+    SongPlayer.setCurrentTime = function(time) {
+        if (currentBuzzObject) {
+            currentBuzzObject.setTime(time);
+        }
     };    
+    
         
     return SongPlayer;
 }
